@@ -9,8 +9,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $books = Book::with('category')->paginate(12);
-        $categories = Category::all();
-        return view('home', compact('books', 'categories'));
+        $booksCount = Book::count();
+        $categoriesCount = Category::count();
+        $latestBooks = Book::latest()->take(6)->get(); // عرض آخر 6 كتب فقط
+
+        return view('home', compact('booksCount', 'categoriesCount', 'latestBooks'));
     }
 }
